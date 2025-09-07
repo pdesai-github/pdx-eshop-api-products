@@ -50,7 +50,6 @@ stages:
         deploy:
           steps:
           - checkout: self
-
           - download: current
             artifact: drop
 
@@ -59,4 +58,4 @@ stages:
             inputs:
               azureSubscription: $(azureServiceConnection)
               appName: $(webAppName)
-              package: '$(Pipeline.Workspace)/drop/*.zip'
+              package: $(Pipeline.Workspace)/drop/
