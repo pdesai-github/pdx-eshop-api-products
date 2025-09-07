@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pdx-eshop-api-products", "pdx-eshop-api-products\pdx-eshop-api-products.csproj", "{2DDAC96C-2F3E-49A4-AE75-8EE9F9A2CC5E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{32E9DF8F-9DE1-445C-85CE-BC74FCE0A05C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
