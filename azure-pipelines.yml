@@ -36,8 +36,8 @@ stages:
 # ============================
 # Deploy Stage
 # ============================
-- stage: Deploy
-  displayName: "Deploy App Service"
+- stage: Dev
+  displayName: "Deploy App Service on Dev"
   dependsOn:
   - Build
   variables:
@@ -45,6 +45,30 @@ stages:
   jobs:
   - deployment: DeployWeb
     environment: 'dev'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - checkout: self
+          - download: current
+            artifact: drop
+
+          - task: AzureWebApp@1
+            displayName: 'Deploy to Azure Web App'
+            inputs:
+              azureSubscription: $(azureServiceConnection)
+              appName: $(webAppName)
+              package: $(Pipeline.Workspace)/drop/
+
+- stage: Stage
+  displayName: "Deploy App Service Staging"
+  dependsOn:
+  - Dev
+  variables:
+    - group: EShopStaging
+  jobs:
+  - deployment: DeployWeb
+    environment: 'staging'
     strategy:
       runOnce:
         deploy:
