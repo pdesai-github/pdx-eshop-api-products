@@ -42,3 +42,32 @@ stages:
                 -appServiceName "$(appServiceWebAppProducts)"
                 -location "$(location)"
                 -sku "$(sku)"
+- stage: ProductInfraStaging
+  displayName: "Deploy ARM template"
+  variables:
+    - group: EShopStaging
+  jobs:
+  - deployment: DeployInfra
+    environment: 'EShop-Staging'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - checkout: self
+          - task: AzureResourceManagerTemplateDeployment@3
+            displayName: 'Deploy ARM template'
+            inputs:
+              deploymentScope: 'Resource Group'
+              azureResourceManagerConnection: $(azureServiceConnection)
+              subscriptionId: $(subscriptionId)
+              action: 'Create Or Update Resource Group'
+              resourceGroupName: $(resourceGroup)
+              location: $(location)
+              templateLocation: 'Linked artifact'
+              csmFile: '$(Build.SourcesDirectory)/pdx-eshop-api-products/azureinfra.json'
+              deploymentMode: 'Incremental'
+              overrideParameters: >
+                -appServicePlanName "$(appServicePlanName)"
+                -appServiceName "$(appServiceWebAppProducts)"
+                -location "$(location)"
+                -sku "$(sku)"
