@@ -43,7 +43,7 @@ stages:
   variables:
     - group: EShopDev
   jobs:
-  - deployment: DeployWeb
+  - deployment: Deploy_Dev
     environment: 'dev'
     strategy:
       runOnce:
@@ -67,7 +67,7 @@ stages:
   variables:
     - group: EShopStaging
   jobs:
-  - deployment: DeployWeb
+  - deployment: Deploy_Staging
     environment: 'staging'
     strategy:
       runOnce:
