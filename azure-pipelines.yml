@@ -57,5 +57,5 @@ stages:
             displayName: 'Deploy to Azure Web App'
             inputs:
               azureSubscription: $(azureServiceConnection)
-              appName: $(webAppName)
+              appName: $(appServiceWebAppProducts)
               package: $(Pipeline.Workspace)/drop/
