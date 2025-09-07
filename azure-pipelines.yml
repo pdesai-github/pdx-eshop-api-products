@@ -44,31 +44,7 @@ stages:
     - group: EShopDev
   jobs:
   - deployment: Deploy_Dev
-    environment: 'dev'
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - checkout: self
-          - download: current
-            artifact: drop
-
-          - task: AzureWebApp@1
-            displayName: 'Deploy to Azure Web App'
-            inputs:
-              azureSubscription: $(azureServiceConnection)
-              appName: $(webAppName)
-              package: $(Pipeline.Workspace)/drop/
-
-- stage: Stage
-  displayName: "Deploy App Service Staging"
-  dependsOn:
-  - Dev
-  variables:
-    - group: EShopStaging
-  jobs:
-  - deployment: Deploy_Staging
-    environment: 'staging'
+    environment: 'EShop-Dev'
     strategy:
       runOnce:
         deploy:
