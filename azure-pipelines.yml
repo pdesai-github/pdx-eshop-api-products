@@ -15,25 +15,22 @@ stages:
 # Build Stage
 # ============================
 - stage: Build
-  displayName: "Build Stage"
+  displayName: "Build and Publish"
   jobs:
-  - job: BuildJob
-    displayName: "Build ASP.NET App"
+  - job: Build
     steps:
-    - task: NuGetToolInstaller@1
-
-    - task: NuGetCommand@2
+    - task: UseDotNet@2
       inputs:
-        restoreSolution: '$(solution)'
+        packageType: 'sdk'
+        version: '8.x'
 
-    - task: VSBuild@1
-      inputs:
-        solution: '$(solution)'
-        msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
-        platform: '$(buildPlatform)'
-        configuration: '$(buildConfiguration)'
+    - script: dotnet build --configuration $(buildConfiguration)
+      displayName: 'Build project'
 
-    - publish: '$(Build.ArtifactStagingDirectory)'
+    - script: dotnet publish -c $(buildConfiguration) -o $(Build.ArtifactStagingDirectory)/publish
+      displayName: 'Publish project'
+
+    - publish: $(Build.ArtifactStagingDirectory)/publish
       artifact: drop
 
 # ============================
