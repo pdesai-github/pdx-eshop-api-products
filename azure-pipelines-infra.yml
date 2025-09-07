@@ -19,7 +19,7 @@ stages:
     - group: EShopDev
   jobs:
   - deployment: DeployInfra
-    environment: 'dev'
+    environment: 'EShop-Dev'
     strategy:
       runOnce:
         deploy:
@@ -39,6 +39,6 @@ stages:
               deploymentMode: 'Incremental'
               overrideParameters: >
                 -appServicePlanName "$(appServicePlanName)"
-                -appServiceName "$(webAppName)"
+                -appServiceName "$(appServiceWebAppProducts)"
                 -location "$(location)"
                 -sku "$(sku)"
