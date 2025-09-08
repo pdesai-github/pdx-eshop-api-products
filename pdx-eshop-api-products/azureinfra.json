@@ -3,10 +3,21 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "appServicePlanName": {
-      "type": "string"
+      "type": "string",
+      "metadata": {
+        "description": "Base name for the App Service Plan"
+      }
     },
     "appServiceName": {
-      "type": "string"
+      "type": "string",
+      "metadata": {
+        "description": "Base name for the Web App"
+      }
+    },
+    "environment": {
+      "type": "string",
+      "defaultValue": "dev",
+      "allowedValues": [ "dev", "staging", "prod" ]
     },
     "location": {
       "type": "string",
@@ -17,11 +28,15 @@
       "defaultValue": "S1"
     }
   },
+  "variables": {
+    "appServicePlanFullName": "[concat(parameters('appServicePlanName'), '-', parameters('environment'))]",
+    "appServiceFullName": "[concat(parameters('appServiceName'), '-', parameters('environment'))]"
+  },
   "resources": [
     {
       "type": "Microsoft.Web/serverfarms",
       "apiVersion": "2022-03-01",
-      "name": "[parameters('appServicePlanName')]",
+      "name": "[variables('appServicePlanFullName')]",
       "location": "[parameters('location')]",
       "sku": {
         "name": "[parameters('sku')]",
@@ -34,14 +49,14 @@
     {
       "type": "Microsoft.Web/sites",
       "apiVersion": "2022-03-01",
-      "name": "[parameters('appServiceName')]",
+      "name": "[variables('appServiceFullName')]",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Web/serverfarms', parameters('appServicePlanName'))]"
+        "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanFullName'))]"
       ],
       "properties": {
-        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('appServicePlanName'))]"
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanFullName'))]"
       }
     }
   ]
-} 
+}
