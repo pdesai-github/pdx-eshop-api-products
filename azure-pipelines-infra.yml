@@ -67,7 +67,7 @@ stages:
               csmFile: '$(Build.SourcesDirectory)/pdx-eshop-api-products/azureinfra.json'
               deploymentMode: 'Incremental'
               overrideParameters: >
-                -appServicePlanName "$(appServicePlanName)"
-                -appServiceName "$(appServiceWebAppProducts)"
+                -appServicePlanName "$[format('{0}-{1}', variables['appServicePlanName'], variables['Environment.Name'])]"
+                -appServiceName "$[format('{0}-{1}', variables['appServiceWebAppProducts'], variables['Environment.Name'])]"
                 -location "$(location)"
                 -sku "$(sku)"
