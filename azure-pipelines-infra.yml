@@ -10,7 +10,12 @@ pool:
   vmImage: ubuntu-latest
 
 variables:
-  azureServiceConnection: 'pdx-eshop-rg'
+- name: azureServiceConnection
+  value: 'pdx-eshop-rg'
+- name: appServicePlanFullName
+  value: "$(appServicePlanName)-$(Environment.Name)"
+- name: appServiceFullName
+  value: "$(webAppName)-$(Environment.Name)"
 
 stages:
 - stage: Infra
@@ -38,8 +43,8 @@ stages:
               csmFile: '$(Build.SourcesDirectory)/pdx-eshop-api-products/azureinfra.json'
               deploymentMode: 'Incremental'
               overrideParameters: >
-                -appServicePlanName "$[format('{0}-{1}', variables['appServicePlanName'], variables['Environment.Name'])]"
-                -appServiceName "$[format('{0}-{1}', variables['appServiceWebAppProducts'], variables['Environment.Name'])]"
+                -appServicePlanName "$(appServicePlanFullName)"
+                -appServiceName "$(appServiceFullName)"
                 -location "$(location)"
                 -sku "$(sku)"
 - stage: ProductInfraStaging
@@ -67,7 +72,7 @@ stages:
               csmFile: '$(Build.SourcesDirectory)/pdx-eshop-api-products/azureinfra.json'
               deploymentMode: 'Incremental'
               overrideParameters: >
-                -appServicePlanName "$[format('{0}-{1}', variables['appServicePlanName'], variables['Environment.Name'])]"
-                -appServiceName "$[format('{0}-{1}', variables['appServiceWebAppProducts'], variables['Environment.Name'])]"
+                -appServicePlanName "$(appServicePlanFullName)"
+                -appServiceName "$(appServiceFullName)"
                 -location "$(location)"
                 -sku "$(sku)"
