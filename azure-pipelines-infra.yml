@@ -12,10 +12,6 @@ pool:
 variables:
 - name: azureServiceConnection
   value: 'pdx-eshop-rg'
-- name: appServicePlanFullName
-  value: "$(appServicePlanName)-$(Environment.Name)"
-- name: appServiceFullName
-  value: "$(webAppName)-$(Environment.Name)"
 
 stages:
 - stage: Infra
@@ -43,8 +39,9 @@ stages:
               csmFile: '$(Build.SourcesDirectory)/pdx-eshop-api-products/azureinfra.json'
               deploymentMode: 'Incremental'
               overrideParameters: >
-                -appServicePlanName "$(appServicePlanFullName)"
-                -appServiceName "$(appServiceFullName)"
+                -appServicePlanName "$(appServicePlanName)"
+                -appServiceName "$(webAppName)"
+                -environment "$(Environment.Name)"
                 -location "$(location)"
                 -sku "$(sku)"
 - stage: ProductInfraStaging
@@ -72,7 +69,8 @@ stages:
               csmFile: '$(Build.SourcesDirectory)/pdx-eshop-api-products/azureinfra.json'
               deploymentMode: 'Incremental'
               overrideParameters: >
-                -appServicePlanName "$(appServicePlanFullName)"
-                -appServiceName "$(appServiceFullName)"
+                -appServicePlanName "$(appServicePlanName)"
+                -appServiceName "$(webAppName)"
+                -environment "$(Environment.Name)"
                 -location "$(location)"
                 -sku "$(sku)"
