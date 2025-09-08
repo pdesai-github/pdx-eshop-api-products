@@ -14,13 +14,13 @@ variables:
   value: 'pdx-eshop-rg'
 
 stages:
-- stage: Infra
-  displayName: "Deploy ARM template"
+- stage: Dev
+  displayName: "Deploy ARM template - Products API - Dev"
   variables:
     - group: EShopDev
   jobs:
   - deployment: DeployInfra
-    environment: 'EShop-Dev'
+    environment: 'Dev'
     strategy:
       runOnce:
         deploy:
@@ -44,7 +44,7 @@ stages:
                 -environment "$(Environment.Name)"
                 -location "$(location)"
                 -sku "$(sku)"
-- stage: ProductInfraStaging
+- stage: Staging
   displayName: "Deploy ARM template"
   variables:
     - group: EShopStaging
