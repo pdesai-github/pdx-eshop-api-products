@@ -14,13 +14,13 @@ variables:
   value: 'pdx-eshop-rg'
 
 stages:
-- stage: dev
+- stage: Dev
   displayName: "Deploy ARM template - Products API - Dev"
   variables:
     - group: EShopDev
   jobs:
   - deployment: DeployInfra
-    environment: 'Dev'
+    environment: 'dev'
     strategy:
       runOnce:
         deploy:
