@@ -15,11 +15,11 @@ variables:
 
 stages:
 - stage: Dev
-  displayName: "Deploy ARM template - Products API - Dev"
+  displayName: "Dev"
   variables:
     - group: EShopDev
   jobs:
-  - deployment: DeployInfra
+  - deployment: Deploy_Products_API
     environment: 'dev'
     strategy:
       runOnce:
@@ -45,11 +45,11 @@ stages:
                 -location "$(location)"
                 -sku "$(sku)"
 - stage: Staging
-  displayName: "Deploy ARM template"
+  displayName: "Staging"
   variables:
     - group: EShopStaging
   jobs:
-  - deployment: DeployInfra
+  - deployment: Deploy_Products_API
     environment: 'staging'
     strategy:
       runOnce:
