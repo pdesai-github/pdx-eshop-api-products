@@ -40,7 +40,7 @@ stages:
               deploymentMode: 'Incremental'
               overrideParameters: >
                 -appServicePlanName "$(appServicePlanName)"
-                -appServiceName "$(webAppName)"
+                -appServiceName "$(appServiceWebAppProducts)"
                 -environment "$(Environment.Name)"
                 -location "$(location)"
                 -sku "$(sku)"
@@ -70,7 +70,7 @@ stages:
               deploymentMode: 'Incremental'
               overrideParameters: >
                 -appServicePlanName "$(appServicePlanName)"
-                -appServiceName "$(webAppName)"
+                -appServiceName "$(appServiceWebAppProducts)"
                 -environment "$(Environment.Name)"
                 -location "$(location)"
                 -sku "$(sku)"
